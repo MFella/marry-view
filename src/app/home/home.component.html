@@ -1,0 +1,31 @@
+<section class="home-section max-w-screen-lg flex flex-col justify-center">
+    <!-- <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title class="!mb-4 w-full text-center"> <h4>Plan your wedding!</h4></mat-card-title>
+        </mat-card-header>
+        <hr>
+        <div class="flex py-2">
+            <mat-card-content class="!flex items-center text-lg drop-shadow-2xl">
+                <p>
+Our wedding planner app is designed to help couples effortlessly organize their dream wedding day. From creating detailed to-do lists to managing your guest list, our intuitive platform covers every aspect of the planning process. You can easily track your budget, book vendors, design seating arrangements, and keep timelines in check — all in one place.
+                </p>
+              </mat-card-content>
+        </div>
+      </mat-card> -->
+      @for (marrySectionConfig of marrySectionConfigs; track $index) {
+        <app-marry-section
+        #sectionRefs
+        (editContentSet$)="scrollToEndOfSection($event)"
+        [config]="marrySectionConfig[1]"
+      />
+      <hr class="my-8">
+      }
+</section>
+
+<div class="fast-forward-container !fixed bottom-4 right-2">
+  @for (marrySectionConfig of marrySectionConfigs; track $index) {
+    <button mat-mini-fab [color]="marrySectionConfig[1].iconColor" aria-label="Scroll action button" class="mr-4" (click)="scrollToEndOfSection(marrySectionConfig[1].sectionIcon)">
+      <span>{{marrySectionConfig[1].sectionIcon}}</span>
+    </button>
+  }
+</div>

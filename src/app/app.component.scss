@@ -1,0 +1,58 @@
+:host {
+  @apply block;
+}
+
+.main-container {
+    // min-height: calc(100% - 4rem);
+    // background: url('../../public/subtle-flowers-1.webp');
+    // background-size: cover;
+    // background-blend-mode: saturation;
+    &::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+      
+        display: block;
+        background-image: url('../../public/subtle-flowers-1.webp');
+        background-size:cover;
+        width: 100%;
+        height: 100%;
+      
+        filter: blur(5px) opacity(.5);
+    }
+}
+
+@keyframes enter {
+    0% {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes exit {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  
+    100% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+
+  ::view-transition-old(root) {
+    animation: exit .4s ease 0s 1 normal forwards;
+  }
+  
+  ::view-transition-new(root) {
+    animation: enter .4s ease 0s 1 normal forwards;
+  }

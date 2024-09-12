@@ -1,0 +1,33 @@
+:host {
+    width: 50%;
+}
+
+::ng-deep {
+    .action-buttons {
+        .mdc-fab {
+            opacity: .3;
+            transition: all .4s;
+        
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .NgxEditor {
+        @apply h-80 overflow-y-scroll;
+        min-height: 8rem;
+
+        &__Content {
+            @apply h-full;
+        }
+    }
+
+    .mat-mdc-list-item {
+        @apply block p-4 shadow-inner mt-4 #{rounded-xl !important};
+        display: block;
+        min-height: 6rem;
+        // border: 1px solid rgba(0,0,0, .2);
+        height: unset !important;
+    }
+}

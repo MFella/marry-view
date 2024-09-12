@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "../node_modules/@angular/material/prebuilt-themes/azure-blue.css";
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-button,
+.mat-mdc-button-base {
+    &.mat-danger {
+        color: rgba(255, 84, 84, 1) !important; 
+
+        .mat-mdc-button-persistent-ripple {
+            color: rgba(255, 74, 74, .3) !important;
+            &::before {
+                background-color: rgba(255, 74, 74, .3) !important;
+            }
+        }
+    }
+
+    &.mat-success {
+        background-color: #15572439;
+        .mat-mdc-button-persistent-ripple {
+            background-color: #15572439;
+            &::before {
+                background-color: #15572439;
+            }
+        }
+    }
+
+    &.mat-accent {
+        background-color: rgba(237, 255, 38, .2) !important;
+        .mat-mdc-button-persistent-ripple{
+            background-color: rgba(237, 255, 38, .2) !important;
+        
+            &::before {
+                background-color: rgba(240, 255, 74, .2) !important;
+            }
+        }
+    }
+}

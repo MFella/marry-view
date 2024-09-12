@@ -1,0 +1,42 @@
+<form class="flex flex-col min-w-96 p-8 !pb-2 rounded-xl bg-white shadow-lg">
+      <mat-list role="list">
+        @for (note of displayNotes; track $index) {
+          <mat-list-item role="listitem" class="!block" [@inOutAnimation]="'in'">
+            <div class="whitespace-normal" [innerHTML]="note.content | sanitizedHtml"></div>
+            <div class="action-buttons absolute right-4 top-4 flex gap-4">
+              <button mat-mini-fab color="none" aria-label="Edit note button" (click)="editNote(note.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab color="none" aria-label="Delete note button" (click)="deleteNote(note.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        }
+      </mat-list>
+      <hr>
+      <div class="ngx-editor__wrapper mt-4">
+        @if (textEditor) {
+          <ngx-editor-menu [editor]="textEditor" [toolbar]="ngxEditorToolbar"> </ngx-editor-menu>
+          <ngx-editor
+            class="ngx-editor_content"
+            [editor]="textEditor"
+            [ngModel]="noteListEditorText"
+            [ngModelOptions]="{standalone: true}"
+            [placeholder]="'Type your note here...'"
+          ></ngx-editor>
+        }
+      </div>
+      <div class="flex w-full justify-center">
+        <button mat-button class="mt-2 w-full" (click)="saveHtmlNote()">
+          <mat-icon>home</mat-icon>
+          <span>Save</span>
+        </button>
+        @if (isEditMode) {
+          <button color="danger" mat-button class="mt-2 w-full" (click)="rejectEdit()">
+            <mat-icon>close</mat-icon>
+            <span>Reject Edit</span>
+          </button>
+        }
+      </div>
+</form>

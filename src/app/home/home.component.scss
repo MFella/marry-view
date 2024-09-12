@@ -1,0 +1,20 @@
+:host {
+    @apply w-full flex justify-center;
+}
+
+section.home-section {
+    @apply w-full;
+}
+
+img.main-wedding-image {
+    max-width: 360px;
+}
+
+::ng-deep {
+    .mat-mdc-card-header-text {
+        width: 100%;
+    }
+    .mat-mdc-card-content {
+        text-shadow: 0px 1px rgba(0,0,0, .3);
+    }
+}
