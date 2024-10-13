@@ -140,14 +140,6 @@ export class NoteListComponent implements OnInit, OnDestroy {
           console.error(JSON.stringify(error));
         },
       });
-    // const displayNoteIds = this.displayNotes.map(displayNote => displayNote.id);
-    // const displayNoteIndex = displayNoteIds.indexOf(noteId);
-
-    // if (displayNoteIndex === -1) {
-    //   return;
-    // }
-
-    // this.displayNotes.splice(displayNoteIndex, 1);
   }
 
   ngOnDestroy(): void {
