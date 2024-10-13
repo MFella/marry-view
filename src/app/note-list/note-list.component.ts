@@ -1,7 +1,15 @@
-import { Component, inject, Input, OnDestroy, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {
+  Component,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  PLATFORM_ID,
+} from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Editor, NgxEditorModule, toHTML, Toolbar } from 'ngx-editor';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,20 +22,29 @@ import { from, Subject, take } from 'rxjs';
 import { NoteKind, NoteService } from 'app/note.service';
 import { SanitizedHtmlPipe } from 'app/sanitized-html.pipe';
 
-
 export type DisplayNote = {
   id: string;
   content: string;
-}
+};
 
 @Component({
   selector: 'app-note-list',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, NgxEditorModule,
-    CommonModule, FormsModule, MatIconModule, MatButtonModule, MatListModule, SanitizedHtmlPipe],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    NgxEditorModule,
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatListModule,
+    SanitizedHtmlPipe,
+  ],
   templateUrl: './note-list.component.html',
   animations: [inOutAnimation],
-  styleUrl: './note-list.component.scss'
+  styleUrl: './note-list.component.scss',
 })
 export class NoteListComponent implements OnInit, OnDestroy {
   readonly platformId = inject(PLATFORM_ID);
@@ -40,7 +57,8 @@ export class NoteListComponent implements OnInit, OnDestroy {
   sectionIcon!: FastForwardIcon;
 
   @Output()
-  readonly editContentSet$: Subject<FastForwardIcon> = new Subject<FastForwardIcon>();
+  readonly editContentSet$: Subject<FastForwardIcon> =
+    new Subject<FastForwardIcon>();
 
   textEditor!: Editor;
 
@@ -52,42 +70,48 @@ export class NoteListComponent implements OnInit, OnDestroy {
   editedNoteId: string = '';
 
   ngxEditorToolbar: Toolbar = [
-    ['bold',
-    'italic','bullet_list', 'ordered_list'],
-  ['underline', 'strike'],
-  ['code', 'blockquote'],
-  ['ordered_list', 'bullet_list'],
-  [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-  ['link', 'image'],
-  ['text_color', 'background_color'],
-  ['align_left', 'align_center', 'align_right', 'align_justify'],
-]
+    ['bold', 'italic', 'bullet_list', 'ordered_list'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.textEditor = new Editor();
-      this.textEditor.valueChanges
-        .subscribe((noteEditorText: Record<string, any>) => {
+      this.textEditor.valueChanges.subscribe(
+        (noteEditorText: Record<string, any>) => {
           this.htmlEditorText = toHTML(noteEditorText);
-        });
+        }
+      );
     }
   }
 
   saveHtmlNote(): void {
-    const resolvedObservable = this.isEditMode ? this.noteService.updateNote(this.getNoteKind(),
-      this.editedNoteId, this.htmlEditorText) : this.noteService.createNote(this.getNoteKind(), this.htmlEditorText);
+    const resolvedObservable = this.isEditMode
+      ? this.noteService.updateNote(
+          this.getNoteKind(),
+          this.editedNoteId,
+          this.htmlEditorText
+        )
+      : this.noteService.createNote(this.getNoteKind(), this.htmlEditorText);
 
     from(resolvedObservable)
       .pipe(take(1))
-      .subscribe({ next: (_response) => {
-        this.textEditor.setContent('');
-        this.isEditMode = false;
-        this.editedNoteId = '';
-
-      }, error: (err) => {
-        console.error(JSON.stringify(err));
-      }
-    });
+      .subscribe({
+        next: _response => {
+          this.textEditor.setContent('');
+          this.isEditMode = false;
+          this.editedNoteId = '';
+        },
+        error: err => {
+          console.error(JSON.stringify(err));
+        },
+      });
   }
 
   editNote(noteId: string): void {
@@ -114,8 +138,8 @@ export class NoteListComponent implements OnInit, OnDestroy {
       .subscribe({
         error: (error: any) => {
           console.error(JSON.stringify(error));
-        }
-      })
+        },
+      });
     // const displayNoteIds = this.displayNotes.map(displayNote => displayNote.id);
     // const displayNoteIndex = displayNoteIds.indexOf(noteId);
 
@@ -127,19 +151,23 @@ export class NoteListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.textEditor?.destroy();
+    this.textEditor?.destroy();
   }
 
   private getNoteKind(): NoteKind {
     switch (this.sectionIcon) {
       case '📹':
         return 'cameraman';
-      case '📷': 
+      case '📷':
         return 'photographer';
-      case '🎸': 
+      case '🎸':
         return 'band';
+      case '🌺':
+        return 'outside-decorations';
+      case '🏨':
+        return 'inside-decorations';
       default: {
-        return 'band'
+        return 'band';
       }
     }
   }

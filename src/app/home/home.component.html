@@ -1,5 +1,5 @@
 <section class="home-section max-w-screen-lg flex flex-col justify-center">
-    <!-- <mat-card class="example-card" appearance="outlined">
+  <!-- <mat-card class="example-card" appearance="outlined">
         <mat-card-header>
           <mat-card-title class="!mb-4 w-full text-center"> <h4>Plan your wedding!</h4></mat-card-title>
         </mat-card-header>
@@ -12,20 +12,23 @@ Our wedding planner app is designed to help couples effortlessly organize their 
               </mat-card-content>
         </div>
       </mat-card> -->
-      @for (marrySectionConfig of marrySectionConfigs; track $index) {
-        <app-marry-section
-        #sectionRefs
-        (editContentSet$)="scrollToEndOfSection($event)"
-        [config]="marrySectionConfig[1]"
-      />
-      <hr class="my-8">
-      }
+  @for (marrySectionConfig of marrySectionConfigs; track $index) {
+    <app-marry-section
+      #sectionRefs
+      (editContentSet$)="scrollToEndOfSection($event)"
+      [config]="marrySectionConfig[1]" />
+    <hr class="my-8" />
+  }
 </section>
 
 <div class="fast-forward-container !fixed bottom-4 right-2">
   @for (marrySectionConfig of marrySectionConfigs; track $index) {
-    <button mat-mini-fab [color]="marrySectionConfig[1].iconColor" aria-label="Scroll action button" class="mr-4" (click)="scrollToEndOfSection(marrySectionConfig[1].sectionIcon)">
-      <span>{{marrySectionConfig[1].sectionIcon}}</span>
+    <button
+      mat-mini-fab
+      [color]="marrySectionConfig[1].iconColor"
+      aria-label="Scroll action button"
+      (click)="scrollToEndOfSection(marrySectionConfig[1].sectionIcon)">
+      <span>{{ marrySectionConfig[1].sectionIcon }}</span>
     </button>
   }
 </div>
